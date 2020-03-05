@@ -11,8 +11,6 @@ public class Executa {
 		contaCliente.setCliente(cliente);
 		
 		System.out.println(contaCliente.getCliente().getNome());
-		
-		
 	}
 	
 }
