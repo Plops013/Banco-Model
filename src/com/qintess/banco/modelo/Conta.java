@@ -6,10 +6,6 @@ public abstract class Conta {
 	private String numero;
 	protected double saldo;
 	private Cliente cliente;
-	double taxaTransferencia = 4;
-	double taxaSaque = 0.3;
-	double taxaLimite = 2;
-	double chequeEspecial = 300;
 
 	public Conta() {};
 
@@ -41,14 +37,6 @@ public abstract class Conta {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-
-	public double getChequeEspecial() {
-		return chequeEspecial;
-	}
-
-	public void setChequeEspecial(double chequeEspecial) {
-		this.chequeEspecial = chequeEspecial;
 	}
 
 	public boolean verificarSaldo(double saldo, double valor) {
