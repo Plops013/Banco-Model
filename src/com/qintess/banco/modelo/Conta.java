@@ -8,7 +8,7 @@ public abstract class Conta {
 	private Cliente cliente;
 
 	public Conta() {};
-
+	
 	public Conta(String agencia, String numero, double saldo, Cliente cliente) {
 		this.agencia = agencia;
 		this.numero = numero;
@@ -19,15 +19,19 @@ public abstract class Conta {
 	public String getAgencia() {
 		return agencia;
 	}
+	
 	public void setAgencia(String agencia) {
 		this.agencia = agencia;
 	}
+	
 	public String getNumero() {
 		return numero;
 	}
+	
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+	
 	public double getSaldo() {
 		return saldo;
 	}
@@ -35,6 +39,7 @@ public abstract class Conta {
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -57,23 +62,21 @@ public abstract class Conta {
 		}
 	}
 
-		public void sacar(double valor) {
-			if (verificarSaldo(this.saldo , valor)) {
-				this.saldo -= valor;
-			} else {
-				System.out.println("Saldo Insuficiente");
-			}
+	public void sacar(double valor) {
+		if (verificarSaldo(this.saldo , valor)) {
+			this.saldo -= valor;
+		} else {
+			System.out.println("Saldo Insuficiente");
 		}
-
-
-		public void depositar(double valor) {
-			this.saldo += valor;
-			System.out.println("Deposito Realizado com Sucesso no Valor de: " + valor + " Na conta de: " + this.getCliente().getNome());
-		}
-
-		@Override
-		public String toString() {
-			return "Conta [agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo + ", cliente=" + cliente + "]";
-		}
-
 	}
+
+	public void depositar(double valor) {
+		this.saldo += valor;
+		System.out.println("Deposito Realizado com Sucesso no Valor de: " + valor + " Na conta de: " + this.getCliente().getNome());
+	}
+
+	@Override
+	public String toString() {
+		return "Conta [agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo + ", cliente=" + cliente + "]";
+	}	
+}

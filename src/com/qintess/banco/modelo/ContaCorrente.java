@@ -46,43 +46,69 @@ public class ContaCorrente extends Conta{
 		this.chequeEspecial = chequeEspecial;
 	}
 
-
-
-	@Override
-	public void transferir(Conta conta, double valor) {
-		if(super.verificarSaldo(super.saldo + this.chequeEspecial , valor + taxaTransferencia)){
-			System.out.println("Você pagou uma taxa de 4 reais pela transferencia");
-			this.sacar(valor);
-			conta.depositar(valor);
-		} else if (super.verificarSaldo(super.saldo + this.chequeEspecial , valor)){
-			taxaAPagar += taxaTransferencia;
-			this.sacar(valor);
-			conta.depositar(valor);
+	public int verificar(double saldo, double valor) {
+		//1 Verifica se Saldo é maior que Valor + a taxa de Saque
+		if (super.getSaldo() >= (valor + this.taxaSaque)){
+			return 1;
+		//2 Verifica se saldo + cheque especial é maior que o valor + a taxa de limite
+		} else if ((this.getSaldo() + this.chequeEspecial) >= (valor + this.taxaLimite)){
+			return 2;
+		//3 Verifica se o saldo + limite é igual o valor, nesse caso ele guarda as taxas para depois
+		} else if ((this.getSaldo() + this.chequeEspecial) == valor){
+			return 3;
+		//4 Saldo insuficiente
 		} else {
-			System.out.println("Transferencia não realizada, Saldo insuficiente");
+			return 4;
 		}
 	}
 
 	@Override
+	public void transferir(Conta conta, double valor) {
+		switch(verificar(super.saldo, valor)) {
+		case 1: {
+			this.sacar(valor + taxaTransferencia - taxaSaque);
+			conta.depositar(valor);
+			break;
+		}
+		case 2: {
+			this.sacar(valor + taxaTransferencia - taxaLimite);
+			conta.depositar(valor);
+			break;
+		}
+		case 3: {
+			taxaAPagar += taxaTransferencia;
+			this.sacar(valor - taxaLimite);
+			conta.depositar(valor);
+			break;
+		}
+		case 4: {
+			System.out.println("Transferencia não realizada, Saldo insuficiente");
+			break;
+		}
+		}
+	}
+
 	public void sacar(double valor) {
-		if (super.verificarSaldo(super.getSaldo(), (valor + this.taxaSaque))){
-			super.saldo -= valor = taxaSaque;
-			System.out.println("Retirado da sua conta : "
-					+ valor);
-		} else if (super.verificarSaldo((this.getSaldo() + this.chequeEspecial), (valor + this.taxaLimite))){
+		switch(verificar(super.saldo, valor)) {
+		case 1: {
+			super.saldo -= valor + taxaSaque;
+			break;
+		}
+		case 2: {
 			super.saldo -= valor + taxaLimite;
-			System.out.println("Retirado da sua conta  : "
-					+ valor);
-		} else if(super.verificarSaldo((this.getSaldo() + this.chequeEspecial) , valor )){
+			break;
+		}
+		case 3: {
 			super.saldo -= valor;
 			taxaAPagar += taxaLimite;
-			System.out.println("Retirado da sua conta  : "
-					+ valor
-					+ " Você sacou todo limite, pagará a taxa no proximo deposito no valor de: "
-					+ taxaAPagar);
-		} else {
-			System.out.println("Saldo Insuficiente");
+			break;
 		}
+		case 4: {
+			System.out.println("Saldo Insuficiente");
+			break;
+		}
+		}
+
 	}
 
 	@Override
