@@ -1,10 +1,10 @@
-package com.app.banco;
+package com.qintess.banco.modelo;
 
 public abstract class Conta {
 
 	private String agencia;
 	private String numero;
-	private double saldo;
+	protected double saldo;
 	private Cliente cliente;
 	double taxaTransferencia = 4;
 	double taxaSaque = 0.3;
@@ -42,7 +42,7 @@ public abstract class Conta {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public double getChequeEspecial() {
 		return chequeEspecial;
 	}
@@ -51,39 +51,41 @@ public abstract class Conta {
 		this.chequeEspecial = chequeEspecial;
 	}
 
-	public void retirarDinheiro(double valor) {
-		saldo -= valor;
-	}
-	
-	public void transferir(Conta conta, double valor){
-		if(this.sacar(valor + taxaTransferencia)) {
-			conta.depositar(valor);
-		} else {
-			System.out.println("Transferencia não realizada, Saldo insuficiente");
-		}
-	}
-
-	public  boolean sacar(double valor) {
-		if (this.saldo >= valor + this.taxaSaque) {
-			this.saldo -= valor + this.taxaSaque;
+	public boolean verificarSaldo(double saldo, double valor) {
+		if (saldo >= valor){
 			return true;
-		} else if ( (this.saldo + this.chequeEspecial) >= valor + this.taxaLimite) {
-			this.saldo -= valor + this.taxaLimite;
-			return true;	
-		} else {
-			System.out.println("Saldo Insuficiente");
+		}
+		else {
 			return false;
 		}
 	}
 
-	public void depositar(double valor) {
-		this.saldo += valor;
-		System.out.println("Deposito Realizado com Sucesso no Valor de: " + valor + " Na conta de: " + this.getCliente().getNome());
+	public void transferir(Conta conta, double valor){
+		if(this.verificarSaldo(this.saldo, valor)) {
+			this.sacar(valor);
+			conta.depositar(valor);
+		} else {
+			System.out.println("Transferencia não realizada, Saldo insuficiente");	
+		}
 	}
 
-	@Override
-	public String toString() {
-		return "Conta [agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo + ", cliente=" + cliente + "]";
-	}
+		public void sacar(double valor) {
+			if (verificarSaldo(this.saldo , valor)) {
+				this.saldo -= valor;
+			} else {
+				System.out.println("Saldo Insuficiente");
+			}
+		}
 
-}
+
+		public void depositar(double valor) {
+			this.saldo += valor;
+			System.out.println("Deposito Realizado com Sucesso no Valor de: " + valor + " Na conta de: " + this.getCliente().getNome());
+		}
+
+		@Override
+		public String toString() {
+			return "Conta [agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo + ", cliente=" + cliente + "]";
+		}
+
+	}

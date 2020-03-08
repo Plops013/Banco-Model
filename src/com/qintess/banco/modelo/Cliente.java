@@ -1,4 +1,4 @@
-package com.app.banco;
+package com.qintess.banco.modelo;
 
 public class Cliente {
 
