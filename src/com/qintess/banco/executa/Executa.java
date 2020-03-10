@@ -1,14 +1,15 @@
 package com.qintess.banco.executa;
 
 import com.qintess.banco.modelo.Cliente;
-
+import com.qintess.banco.modelo.Conta;
 import com.qintess.banco.modelo.ContaCorrente;
 
 public class Executa {
 
 	public static void main(String[] args) {
 		
-		ContaCorrente contaCliente = new ContaCorrente();
+		Conta
+		contaCliente = new ContaCorrente();
 		ContaCorrente contaCliente2 = new ContaCorrente();
 		
 		contaCliente.setAgencia("123");
@@ -19,20 +20,13 @@ public class Executa {
 		contaCliente.setCliente(cliente);
 		
 		contaCliente2.setCliente(cli);
-		contaCliente.depositar(1000);
+		contaCliente.depositar(100);
 		
 		System.out.println(contaCliente);
 		
-		contaCliente.transferir(contaCliente2, 500);
-		System.out.println(contaCliente);
-
+		contaCliente.sacar(150);
 		System.out.println(contaCliente);
 		
-		contaCliente.transferir(contaCliente2, 796);
-		System.out.println(contaCliente);
-	
-		contaCliente.depositar(10);
-		System.out.println(contaCliente);
 	}
 
 }

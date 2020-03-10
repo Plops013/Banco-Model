@@ -44,37 +44,14 @@ public abstract class Conta {
 		this.cliente = cliente;
 	}
 
-	public boolean verificarSaldo(double saldo, double valor) {
-		if (saldo >= valor){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	public abstract int verificarSaldo(double valor);
+	
+	public abstract void transferir(Conta conta, double valor);
 
-	public void transferir(Conta conta, double valor){
-		if(this.verificarSaldo(this.saldo, valor)) {
-			this.sacar(valor);
-			conta.depositar(valor);
-		} else {
-			System.out.println("Transferencia não realizada, Saldo insuficiente");	
-		}
-	}
+	public abstract void sacar(double valor);
 
-	public void sacar(double valor) {
-		if (verificarSaldo(this.saldo , valor)) {
-			this.saldo -= valor;
-		} else {
-			System.out.println("Saldo Insuficiente");
-		}
-	}
-
-	public void depositar(double valor) {
-		this.saldo += valor;
-		System.out.println("Deposito Realizado com Sucesso no Valor de: " + valor + " Na conta de: " + this.getCliente().getNome());
-	}
-
+	public abstract void depositar(double valor);
+	
 	@Override
 	public String toString() {
 		return "Conta [agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo + ", cliente=" + cliente + "]";

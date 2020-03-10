@@ -46,15 +46,15 @@ public class ContaCorrente extends Conta{
 		this.chequeEspecial = chequeEspecial;
 	}
 
-	public int verificar(double saldo, double valor) {
+	public int verificarSaldo(double valor) {
 		//1 Verifica se Saldo é maior que Valor + a taxa de Saque
-		if (super.getSaldo() >= (valor + this.taxaSaque)){
+		if (this.saldo >= (valor + this.taxaSaque)){
 			return 1;
 		//2 Verifica se saldo + cheque especial é maior que o valor + a taxa de limite
-		} else if ((this.getSaldo() + this.chequeEspecial) >= (valor + this.taxaLimite)){
+		} else if ((this.saldo + this.chequeEspecial) >= (valor + this.taxaLimite)){
 			return 2;
 		//3 Verifica se o saldo + limite é igual o valor, nesse caso ele guarda as taxas para depois
-		} else if ((this.getSaldo() + this.chequeEspecial) == valor){
+		} else if ((this.saldo + this.chequeEspecial) == valor){
 			return 3;
 		//4 Saldo insuficiente
 		} else {
@@ -64,7 +64,7 @@ public class ContaCorrente extends Conta{
 
 	@Override
 	public void transferir(Conta conta, double valor) {
-		switch(verificar(super.saldo, valor)) {
+		switch(verificarSaldo(valor)) {
 		case 1: {
 			this.sacar(valor + taxaTransferencia - taxaSaque);
 			conta.depositar(valor);
@@ -90,7 +90,7 @@ public class ContaCorrente extends Conta{
 
 	@Override
 	public void sacar(double valor) {
-		switch(verificar(super.saldo, valor)) {
+		switch(verificarSaldo(valor)) {
 		case 1: {
 			super.saldo -= valor + taxaSaque;
 			break;
@@ -145,9 +145,17 @@ public class ContaCorrente extends Conta{
 		}
 	}
 
+	public double getLimite() {
+		if (super.saldo > 0) {
+			return chequeEspecial;
+		} else {
+			return this.chequeEspecial + super.saldo;
+		}
+	}
+	
 	@Override
 	public String toString() {
-		return "ContaCorrente [taxaAPagar=" + taxaAPagar + ", saldo=" + saldo + "]";
+		return "ContaCorrente [taxaAPagar=" + taxaAPagar + ", saldo=" + saldo + ", limite="+ this.getLimite() + "]";
 	}
 
 
