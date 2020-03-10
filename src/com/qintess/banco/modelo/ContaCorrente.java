@@ -153,10 +153,10 @@ public class ContaCorrente extends Conta{
 		}
 	}
 	
-	@Override
-	public String toString() {
-		return "ContaCorrente [taxaAPagar=" + taxaAPagar + ", saldo=" + saldo + ", limite="+ this.getLimite() + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "ContaCorrente [taxaAPagar=" + taxaAPagar + ", saldo=" + saldo + ", limite="+ this.getLimite() + "]";
+//	}
 
 
 

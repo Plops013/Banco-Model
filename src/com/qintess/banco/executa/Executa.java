@@ -8,10 +8,9 @@ public class Executa {
 
 	public static void main(String[] args) {
 		
-		Conta
-		contaCliente = new ContaCorrente();
-		ContaCorrente contaCliente2 = new ContaCorrente();
-		
+		Conta contaCliente = new ContaCorrente();
+		Conta contaCliente2 = new ContaCorrente();
+
 		contaCliente.setAgencia("123");
 		
 		Cliente cliente = new Cliente("12312312312", "Fabio Lopes", "fabio.lopes@qintess.com");
